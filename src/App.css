@@ -10,6 +10,7 @@ body {
   height: 100vh;
 }
 
+/* 카드 스타일 컨테이너 */
 .container {
   background: white;
   padding: 25px;
@@ -27,6 +28,7 @@ body {
   height: 300px;
 }
 
+/* 타이틀 스타일 */
 h2 {
   font-size: 1.8rem;
   font-weight: bold;
@@ -36,6 +38,7 @@ h2 {
   width: 100%;
 }
 
+/* 입력 필드 스타일 */
 .input-container {
   display: flex;
   flex-direction: column;
@@ -47,19 +50,39 @@ h2 {
 input[type="month"] {
   width: 100%;
   max-width: 280px;
-  padding: 12px;
+  min-width: 200px; /* 너무 작아지는 문제 방지 */
+  padding: 14px;
   font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
   background-color: white;
   color: #333;
-  margin: 20px 0;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  box-sizing: border-box;
+  appearance: none; /* 기본 브라우저 스타일 제거 */
+  -webkit-appearance: none; /* iOS 사파리 기본 스타일 제거 */
+  -moz-appearance: none;
 }
 
+/* 입력 필드 활성화 효과 */
+input[type="month"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* placeholder 문제 해결 (iOS 대응) */
+input[type="month"]::before {
+  content: attr(placeholder);
+  color: #aaa;
+  display: block;
+}
+
+input[type="month"]:valid::before {
+  display: none;
+}
+
+/* 버튼 스타일 */
 button {
   width: 100%;
   max-width: 280px;
@@ -68,20 +91,23 @@ button {
   color: white;
   background-color: #007bff;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
-  margin-top: 15px;
-  text-align: center;
+  transition: background 0.3s, transform 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+  margin-top: 20px;
 }
 
 button:hover {
   background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 123, 255, 0.3);
 }
 
+/* 모바일 환경 최적화 */
 @media (max-width: 480px) {
   .container {
     width: 95%;

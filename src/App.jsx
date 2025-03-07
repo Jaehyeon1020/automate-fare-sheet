@@ -120,12 +120,10 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="container">
       <h2>운임 양식 만들기</h2>
       <input type="month" value={monthInput} onChange={handleMonthChange} />
-      <button onClick={handleExcelDownload} style={{ marginLeft: "10px" }}>
-        양식 생성
-      </button>
+      <button onClick={handleExcelDownload}>양식 생성</button>
     </div>
   );
 }

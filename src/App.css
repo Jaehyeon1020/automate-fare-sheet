@@ -1,3 +1,4 @@
+/* App.css */
 body {
   font-family: "Arial", sans-serif;
   margin: 0;
@@ -11,40 +12,58 @@ body {
 
 .container {
   background: white;
-  padding: 20px;
+  padding: 25px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 90%;
   max-width: 400px;
+
+  /* 세로 중앙 정렬 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: bold;
   color: #333;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
 }
 
 .input-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px; /* 요소 간 간격 조정 */
+  gap: 20px;
+  width: 100%;
 }
 
 input[type="month"] {
   width: 100%;
-  padding: 10px;
+  max-width: 280px;
+  padding: 12px;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: white; /* 날짜 입력 필드 하얀색 */
+  background-color: white;
   color: #333;
+  margin: 20px 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button {
   width: 100%;
-  padding: 12px;
+  max-width: 280px;
+  padding: 14px;
   font-size: 1rem;
   color: white;
   background-color: #007bff;
@@ -52,7 +71,11 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s;
-  margin-top: 10px; /* 버튼과 입력 필드 사이 간격 추가 */
+  margin-top: 15px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button:hover {
@@ -62,16 +85,18 @@ button:hover {
 @media (max-width: 480px) {
   .container {
     width: 95%;
-    padding: 15px;
+    padding: 20px;
+    height: auto;
   }
 
   h2 {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
+    padding-bottom: 20px;
   }
 
   input[type="month"],
   button {
-    font-size: 0.9rem;
-    padding: 10px;
+    font-size: 1rem;
+    padding: 12px;
   }
 }

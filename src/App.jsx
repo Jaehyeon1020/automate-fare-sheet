@@ -8,9 +8,15 @@ const getDaysInMonth = (year, month) => new Date(year, month, 0).getDate();
 
 // 날짜를 "yyyy.mm.dd" 형식으로 변환하는 함수
 const formatDate = (year, month, day) => {
-  const mm = String(month).padStart(2, "0"); // 월 두 자리
-  const dd = String(day).padStart(2, "0"); // 일 두 자리
+  const mm = String(month).padStart(2, "0");
+  const dd = String(day).padStart(2, "0");
   return `${year}.${mm}.${dd}`;
+};
+
+// 요일 구하는 함수
+const getDayOfWeek = (year, month, day) => {
+  const date = new Date(year, month - 1, day);
+  return ["일", "월", "화", "수", "목", "금", "토"][date.getDay()];
 };
 
 function App() {
@@ -27,14 +33,15 @@ function App() {
     }
 
     const [year, month] = monthInput.split("-").map(Number);
-    const monthDays = getDaysInMonth(year, month); // 현재 월의 마지막 날짜
+    const monthDays = getDaysInMonth(year, month);
+
     let nextYear = year;
     let nextMonth = month + 1;
     if (nextMonth > 12) {
       nextMonth = 1;
       nextYear++;
     }
-    const nextMonthDays = getDaysInMonth(nextYear, nextMonth); // 다음 월의 마지막 날짜
+    const nextMonthDays = getDaysInMonth(nextYear, nextMonth);
 
     try {
       const response = await fetch("/example.xlsx");
@@ -43,7 +50,6 @@ function App() {
       const workbook = new ExcelJS.Workbook();
       await workbook.xlsx.load(arrayBuffer);
 
-      // Sheet1 작업
       const sheet1 = workbook.getWorksheet("Sheet1");
       sheet1.getCell("D2").value = `${month}월 일자별 운임`;
 
@@ -51,15 +57,16 @@ function App() {
       let currentMonth = month;
       let currentDay = 1;
 
-      // D8 ~ D24 날짜 채우기
+      // D8 ~ D24 날짜 + E열 요일
       for (let i = 8; i <= 24; i++) {
-        sheet1.getCell(`D${i}`).value = formatDate(
+        const dateStr = formatDate(currentYear, currentMonth, currentDay);
+        sheet1.getCell(`D${i}`).value = dateStr;
+        sheet1.getCell(`E${i}`).value = getDayOfWeek(
           currentYear,
           currentMonth,
           currentDay
         );
 
-        // 날짜 증가 로직
         currentDay++;
         if (currentDay > monthDays) {
           currentDay = 1;
@@ -71,15 +78,16 @@ function App() {
         }
       }
 
-      // I8 ~ I21 날짜 채우기 (D24에서 이어지는 날짜)
+      // I8 ~ I21 날짜 + J열 요일
       for (let i = 8; i <= 21; i++) {
-        sheet1.getCell(`I${i}`).value = formatDate(
+        const dateStr = formatDate(currentYear, currentMonth, currentDay);
+        sheet1.getCell(`I${i}`).value = dateStr;
+        sheet1.getCell(`J${i}`).value = getDayOfWeek(
           currentYear,
           currentMonth,
           currentDay
         );
 
-        // 날짜 증가 로직
         currentDay++;
         if (currentMonth === month && currentDay > monthDays) {
           currentDay = 1;
@@ -95,15 +103,15 @@ function App() {
         }
       }
 
-      // Sheet1 날짜 셀 너비 조정
-      sheet1.getColumn(4).width = 13;
-      sheet1.getColumn(9).width = 13;
+      // Sheet1 셀 너비 조정
+      sheet1.getColumn(4).width = 13; // D열
+      sheet1.getColumn(5).width = 8; // E열 (요일)
+      sheet1.getColumn(9).width = 13; // I열
+      sheet1.getColumn(10).width = 8; // J열 (요일)
 
       // Sheet2 작업
       const sheet2 = workbook.getWorksheet("Sheet2");
       sheet2.getCell("D3").value = `${month}월 운임별 예상 수익 현황`;
-
-      // Sheet2 셀 너비 조정
       sheet2.getColumn(4).width = 16;
 
       // 파일 다운로드

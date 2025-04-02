@@ -5,8 +5,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   server: {
-    allowedHosts: [
-      "port-0-automate-fare-sheet-m7yajxat795b213e.sel4.cloudtype.app",
-    ],
+    host: "0.0.0.0",
+    port: 5173,
+    allowedHosts: "all",
   },
 });

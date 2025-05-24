@@ -114,6 +114,15 @@ function App() {
       sheet2.getCell("D3").value = `${month}월 운임별 예상 수익 현황`;
       sheet2.getColumn(4).width = 16;
 
+      sheet2.getCell("F10").value = { formula: "SUM(F8:F9)" };
+      sheet2.getCell("F10").numFmt = '0 "만원"';
+      sheet2.getCell("G10").value = { formula: "SUM(G8:G9)" };
+      sheet2.getCell("G10").numFmt = '0 "만원"';
+      sheet2.getCell("H10").value = { formula: "SUM(H8:H9)" };
+      sheet2.getCell("H10").numFmt = '0 "만원"';
+      sheet2.getCell("I10").value = { formula: "SUM(I8:I9)" };
+      sheet2.getCell("I10").numFmt = '0 "만원"';
+
       // 파일 다운로드
       const modifiedBuffer = await workbook.xlsx.writeBuffer();
       const blob = new Blob([modifiedBuffer], {
